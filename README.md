@@ -89,20 +89,6 @@ The system supports **bidirectional communication**, enabling meaningful interac
 
 ---
 
-## 📌 Project Status
-
-✔ Problem definition and background study
-✔ Requirement analysis and system design
-✔ Dataset collection and preprocessing
-✔ Sign-to-text model development
-✔ Text-to-sign avatar generation
-✔ Backend and mobile integration
-✔ Performance evaluation and testing
-✔ Complete technical documentation
-
-The project delivers a **functional, real-time, two-way communication system** for sign and speech translation.
-
----
 
 ## 📝 Additional Notes
 
