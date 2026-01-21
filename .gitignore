@@ -1,0 +1,41 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Env/secrets
+.env
+*.env
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE/OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Build
+build/
+dist/
+*.egg-info/
+
+# Test & coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Data / temp outputs (your project has Data/tmp)
+Data/tmp/
+data/tmp/
+*.ckpt
+*.pth
+*.pt
+*.h5
+*.onnx
