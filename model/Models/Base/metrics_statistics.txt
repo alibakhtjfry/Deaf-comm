@@ -1,0 +1,19 @@
+Training Metrics Statistics
+==================================================
+
+Loss Statistics:
+  Minimum Loss: 0.000000 (Epoch 0)
+  Maximum Loss: 0.037980 (Epoch 5)
+  Average Loss: 0.008319
+  Std Dev Loss: 0.004945
+
+DTW Validation Statistics:
+  Minimum DTW: 12.135000 (Epoch 19)
+  Maximum DTW: 139.138000 (Epoch 0)
+  Average DTW: 28.687161
+  Std Dev DTW: 32.979917
+
+Training Summary:
+  Total Epoch Records: 62
+  Loss Change: 0.007500 (end - start)
+  DTW Change: -116.897000 (end - start)

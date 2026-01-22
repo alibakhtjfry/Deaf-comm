@@ -1,14 +1,18 @@
 import re
 import torch
+import os
 from transformers import MarianMTModel, MarianTokenizer
 
 # =========================
-# PATHS (DEAF-COMM)
+# PATHS (DEAF-COMM) - Using relative paths
 # =========================
-TEST_TEXT_PATH  = r"C:\Users\ctrend\Deaf-comm\model\Data\tmp\test.text"
-TEST_GLOSS_PATH = r"C:\Users\ctrend\Deaf-comm\model\Data\tmp\test.gloss"
-VOCAB_PATH      = r"C:\Users\ctrend\Deaf-comm\model\Configs\src_vocab.txt"
-DEBUG_FULL_GLOSS_PATH = r"C:\Users\ctrend\Deaf-comm\model\Data\tmp\debug_full_gloss.txt"
+# Get the directory of this script
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+TEST_TEXT_PATH  = os.path.join(SCRIPT_DIR, "Data", "tmp", "test.text")
+TEST_GLOSS_PATH = os.path.join(SCRIPT_DIR, "Data", "tmp", "test.gloss")
+VOCAB_PATH      = os.path.join(SCRIPT_DIR, "Configs", "src_vocab.txt")
+DEBUG_FULL_GLOSS_PATH = os.path.join(SCRIPT_DIR, "Data", "tmp", "debug_full_gloss.txt")
 
 # =========================
 # LOAD MODEL VOCAB

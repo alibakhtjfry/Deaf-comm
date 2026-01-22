@@ -8,7 +8,6 @@ import numpy as np
 import torch
 from torch import Tensor
 from torch.utils.tensorboard import SummaryWriter
-from torchtext.data import Dataset
 
 from model import build_model
 from batch import Batch
@@ -241,7 +240,7 @@ class TrainManager:
             self.model.cuda()
 
     # Train and validate function
-    def train_and_validate(self, train_data: Dataset, valid_data: Dataset) \
+    def train_and_validate(self, train_data, valid_data) \
             -> None:
         # Make training iterator
         train_iter = make_data_iter(train_data,

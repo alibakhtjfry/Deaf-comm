@@ -8,11 +8,9 @@ import os.path
 from typing import Optional
 import io
 
-# from torchtext.datasets import TranslationDataset
-from torchtext import data
-from torchtext.data import Dataset, Iterator, Field
 import torch
 
+from torchtext_stub import data
 from constants import UNK_TOKEN, EOS_TOKEN, BOS_TOKEN, PAD_TOKEN, TARGET_PAD
 from vocabulary import build_vocab, Vocabulary
 
@@ -25,8 +23,7 @@ from vocabulary import build_vocab, Vocabulary
 # Each joint value should be separated by a space; " "
 # Each frame is partioned using the known trg_size length, which includes all joints (In 2D or 3D) and the counter
 # Files file should contain the name of each sequence on a new line
-def load_data(cfg: dict) -> (Dataset, Dataset, Optional[Dataset],
-                                  Vocabulary, Vocabulary):
+def load_data(cfg: dict):
     """
     Load train, dev and optionally test data as specified in configuration.
     Vocabularies are created from the training set with a limit of `voc_limit`
@@ -158,11 +155,11 @@ def token_batch_size_fn(new, count, sofar):
     return max(src_elements, tgt_elements)
 
 
-def make_data_iter(dataset: Dataset,
+def make_data_iter(dataset,
                    batch_size: int,
                    batch_type: str = "sentence",
                    train: bool = False,
-                   shuffle: bool = False) -> Iterator:
+                   shuffle: bool = False):
     """
     Returns a torchtext iterator for a torchtext dataset.
 
@@ -177,6 +174,14 @@ def make_data_iter(dataset: Dataset,
     """
 
     batch_size_fn = token_batch_size_fn if batch_type == "token" else None
+    
+    # Get vocabulary from the dataset fields if available
+    vocab = None
+    if hasattr(dataset, 'fields') and dataset.fields:
+        for field_name, field in dataset.fields:
+            if field_name == 'src' and hasattr(field, 'vocab'):
+                vocab = field.vocab
+                break
 
     if train:
         # optionally shuffle and sort during training
@@ -184,18 +189,18 @@ def make_data_iter(dataset: Dataset,
             repeat=False, sort=False, dataset=dataset,
             batch_size=batch_size, batch_size_fn=batch_size_fn,
             train=True, sort_within_batch=True,
-            sort_key=lambda x: len(x.src), shuffle=shuffle)
+            sort_key=lambda x: len(x.src), shuffle=shuffle, vocab=vocab)
     else:
         # don't sort/shuffle for validation/inference
         data_iter = data.BucketIterator(
             repeat=False, dataset=dataset,
             batch_size=batch_size, batch_size_fn=batch_size_fn,
-            train=False, sort=False)
+            train=False, sort=False, vocab=vocab)
 
     return data_iter
 
 # Main Dataset Class
-class SignProdDataset(data.Dataset):
+class SignProdDataset:
     """Defines a dataset for machine translation."""
 
     def __init__(self, path, exts, fields, trg_size, skip_frames=1, **kwargs):
@@ -244,4 +249,6 @@ class SignProdDataset(data.Dataset):
                     examples.append(data.Example.fromlist(
                         [src_line, trg_frames, files_line], fields))
 
-        super(SignProdDataset, self).__init__(examples, fields, **kwargs)
+        # Initialize dataset manually instead of calling super()
+        self.examples = examples
+        self.fields = fields

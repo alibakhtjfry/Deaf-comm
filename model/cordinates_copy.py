@@ -1,4 +1,8 @@
-file_path = r"C:\Users\ctrend\Deaf-comm\model\Data\tmp\test.skels"
+import os
+
+# Get the directory of this script and build path relative to it
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+file_path = os.path.join(SCRIPT_DIR, "Data", "tmp", "test.skels")
 line_number = 3             # line number to copy (1-based index)
 
 # Read all lines
